@@ -8,7 +8,11 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
 
   subscription_id = var.subscription_id
   tenant_id       = var.tenant_id
@@ -145,9 +149,9 @@ resource "azurerm_virtual_machine" "mainvm" {
     disable_password_authentication = false
 
     ssh_keys {
-    path     = "/home/${var.admin_username}/.ssh/authorized_keys"
-    key_data = file("./automation/azuretestpem.pub")
-  }
+      path     = "/home/${var.admin_username}/.ssh/authorized_keys"
+      key_data = file("./automation/azuretestpem.pub")
+    }
   }
 
   tags = {

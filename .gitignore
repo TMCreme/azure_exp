@@ -2,4 +2,5 @@
 *.tfstate
 .terraform*
 azuretestpem*
+terraform*
 
