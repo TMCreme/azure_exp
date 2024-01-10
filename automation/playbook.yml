@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: true
+  gather_facts: false
+
+  vars_files:
+  -  playbook_vars/{{ environment }}/vars.yml 
+
+  # vars:
+
+  tasks:
+  - name: Copy new app to server
+    copy:
+      src: ../app/
+      dest: /app
+      owner: testadmin
+      mode: 0644
+  
+  - name: Run the docker compose 
+    become: true
+    shell:
+      chdir: /app
+      cmd: docker compose up -d 
+    
+
